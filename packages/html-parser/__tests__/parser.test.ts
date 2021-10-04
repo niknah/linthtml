@@ -1,5 +1,6 @@
-const { expect } = require("chai");
-const parse = require("../lib");
+import { describe, it } from "mocha";
+import { expect } from "chai";
+import parse, { Element } from "../lib";
 
 describe("HTML Parser", function() {
   it("Tags positions are correct (nesting)", function() {
@@ -25,7 +26,7 @@ describe("HTML Parser", function() {
           column: 7
         }
       });
-    expect(children[0].close.loc)
+    expect(children[0].close!.loc)
       .to
       .deep
       .equal({
@@ -51,7 +52,7 @@ describe("HTML Parser", function() {
           column: 19
         }
       });
-    expect(children[0].children[1].close.loc)
+    expect(children[0].children[1].close!.loc)
       .to
       .deep
       .equal({
@@ -189,9 +190,10 @@ describe("HTML Parser", function() {
         "</body>"
       ].join("\n")
     );
-    const div = children[0].children[1];
+    const div = <Element> children[0].children[1];
 
     expect(div.attributes).to.have.lengthOf(3);
+    //@ts-ignore
     const [class_1, id, class_2] = div.attributes;
 
     expect(class_1.type).to.equal("attribute");
@@ -217,9 +219,9 @@ describe("HTML Parser", function() {
         column: 13
       }
     });
-    expect(class_1.equal.chars).to.equal("=");
-    expect(class_1.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(class_1.equal.loc).to.deep.equal({
+    expect(class_1.equal!.chars).to.equal("=");
+    expect(class_1.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(class_1.equal!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 13
@@ -229,9 +231,9 @@ describe("HTML Parser", function() {
         column: 14
       }
     });
-    expect(class_1.value.chars).to.equal("hello");
-    expect(class_1.value.raw).to.be.equal("\"hello\"");
-    expect(class_1.value.loc).to.deep.equal({
+    expect(class_1.value!.chars).to.equal("hello");
+    expect(class_1.value!.raw).to.be.equal("\"hello\"");
+    expect(class_1.value!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 14
@@ -265,9 +267,9 @@ describe("HTML Parser", function() {
         column: 24
       }
     });
-    expect(id.equal.chars).to.equal("=");
-    expect(id.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(id.equal.loc).to.deep.equal({
+    expect(id.equal!.chars).to.equal("=");
+    expect(id.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(id.equal!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 24
@@ -277,9 +279,9 @@ describe("HTML Parser", function() {
         column: 25
       }
     });
-    expect(id.value.chars).to.equal("identityDiv");
-    expect(id.value.raw).to.be.equal("\"identityDiv\"");
-    expect(id.value.loc).to.deep.equal({
+    expect(id.value!.chars).to.equal("identityDiv");
+    expect(id.value!.raw).to.be.equal("\"identityDiv\"");
+    expect(id.value!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 25
@@ -313,9 +315,9 @@ describe("HTML Parser", function() {
         column: 44
       }
     });
-    expect(class_2.equal.chars).to.equal("=");
-    expect(class_2.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(class_2.equal.loc).to.deep.equal({
+    expect(class_2.equal!.chars).to.equal("=");
+    expect(class_2.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(class_2.equal!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 44
@@ -325,9 +327,9 @@ describe("HTML Parser", function() {
         column: 45
       }
     });
-    expect(class_2.value.chars).to.equal("goodbye");
-    expect(class_2.value.raw).to.be.equal("\"goodbye\"");
-    expect(class_2.value.loc).to.deep.equal({
+    expect(class_2.value!.chars).to.equal("goodbye");
+    expect(class_2.value!.raw).to.be.equal("\"goodbye\"");
+    expect(class_2.value!.loc).to.deep.equal({
       start: {
         line: 2,
         column: 45
@@ -351,7 +353,7 @@ describe("HTML Parser", function() {
         "</body>"
       ].join("\n")
     );
-    const div = children[0].children[1];
+    const div = <Element> children[0].children[1];
 
     expect(div.attributes).to.have.lengthOf(2);
     const [_class, id] = div.attributes;
@@ -369,9 +371,9 @@ describe("HTML Parser", function() {
         column: 10
       }
     });
-    expect(_class.equal.chars).to.equal("=");
-    expect(_class.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(_class.equal.loc).to.deep.equal({
+    expect(_class.equal!.chars).to.equal("=");
+    expect(_class.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(_class.equal!.loc).to.deep.equal({
       start: {
         line: 3,
         column: 10
@@ -381,9 +383,9 @@ describe("HTML Parser", function() {
         column: 11
       }
     });
-    expect(_class.value.chars).to.equal("hello");
-    expect(_class.value.raw).to.be.equal("\"hello\"");
-    expect(_class.value.loc).to.deep.equal({
+    expect(_class.value!.chars).to.equal("hello");
+    expect(_class.value!.raw).to.be.equal("\"hello\"");
+    expect(_class.value!.loc).to.deep.equal({
       start: {
         line: 3,
         column: 11
@@ -407,9 +409,9 @@ describe("HTML Parser", function() {
         column: 7
       }
     });
-    expect(id.equal.chars).to.equal("=");
-    expect(id.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(id.equal.loc).to.deep.equal({
+    expect(id.equal!.chars).to.equal("=");
+    expect(id.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(id.equal!.loc).to.deep.equal({
       start: {
         line: 4,
         column: 7
@@ -419,9 +421,9 @@ describe("HTML Parser", function() {
         column: 8
       }
     });
-    expect(id.value.chars).to.equal("identityDiv");
-    expect(id.value.raw).to.be.equal("\"identityDiv\"");
-    expect(id.value.loc).to.deep.equal({
+    expect(id.value!.chars).to.equal("identityDiv");
+    expect(id.value!.raw).to.be.equal("\"identityDiv\"");
+    expect(id.value!.loc).to.deep.equal({
       start: {
         line: 4,
         column: 8
@@ -445,7 +447,7 @@ describe("HTML Parser", function() {
         "</body>"
       ].join("\n")
     );
-    const div = children[0].children[1];
+    const div = <Element> children[0].children[1];
 
     expect(div.attributes).to.have.lengthOf(1);
     const [_class] = div.attributes;
@@ -474,9 +476,9 @@ describe("HTML Parser", function() {
         column: 10
       }
     });
-    expect(_class.equal.chars).to.equal("=");
-    expect(_class.equal.raw).to.be.undefined; // should contains `=` + spaces?
-    expect(_class.equal.loc).to.deep.equal({
+    expect(_class.equal!.chars).to.equal("=");
+    expect(_class.equal!.raw).to.be.undefined; // should contains `=` + spaces?
+    expect(_class.equal!.loc).to.deep.equal({
       start: {
         line: 3,
         column: 10
@@ -486,9 +488,9 @@ describe("HTML Parser", function() {
         column: 11
       }
     });
-    expect(_class.value.chars).to.equal("hello\n      identityDiv");
-    expect(_class.value.raw).to.be.equal("\"hello\n      identityDiv\"");
-    expect(_class.value.loc).to.deep.equal({
+    expect(_class.value!.chars).to.equal("hello\n      identityDiv");
+    expect(_class.value!.raw).to.be.equal("\"hello\n      identityDiv\"");
+    expect(_class.value!.loc).to.deep.equal({
       start: {
         line: 3,
         column: 11
